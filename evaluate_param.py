@@ -236,10 +236,10 @@ class mobile_param_evaluate:
         stop = 1
         for brand in self.brand_list:
 
-            if brand.strip() != 'vivo' and stop == 1:   #控制从哪个开始爬取,从VERTU这个手机厂家开始爬去
-                continue
-            else:
-                stop = 0
+            # if brand.strip() != 'vivo' and stop == 1:   #控制从哪个开始爬取,从VERTU这个手机厂家开始爬去
+            #     continue
+            # else:
+            #     stop = 0
 
             global count
             count = 0
