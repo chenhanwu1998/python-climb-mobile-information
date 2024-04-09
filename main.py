@@ -1,6 +1,7 @@
-from reptile_project.gzc_climb import mobile_type
-from reptile_project.gzc_climb import evaluate_param
-from reptile_project.gzc_climb import zgc_mobile
+import evaluate_param
+import mobile_type
+import zgc_mobile
+
 if __name__ == '__main__':
     mobile_type = mobile_type.m_type()
     mobile_type.climb_m_type()
