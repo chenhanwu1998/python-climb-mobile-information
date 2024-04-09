@@ -123,8 +123,9 @@ class mobile_param_evaluate:
             key_list1 = ['屏幕', '分辨率', '后置', '前置', '电池', '内存']
             key_list2 = ['主屏尺寸', '主屏分辨率', '后置摄像头', '前置摄像头', '电池容量', '内存']
             param = html.xpath(zp_pattern)
-            if param:  # 判断是否存在先
-                param = param[0]
+            if param is None or len(param) == 0:  # 判断是否存在先
+                return
+            param = param[0]
             param = param.xpath('string(.)').replace('\t', '').replace('\r', '').replace(' ', '')  # 获取所有的在这个标签内的东西后再做分割
             param_list = param.split('\n')
             param_list = [p for p in param_list if len(p) != 0 and '：' in p]  # 顺便去掉一些噪音字符
@@ -147,8 +148,8 @@ class mobile_param_evaluate:
     def get_eva_score(self, html):
         # 获取评价指标，将指标写入字典中存储
 
-        eva_v_pattern = "//div[@class='wrapper']//div[@class='circle-value']"
-        eva_t_pattern = "//div[@class='wrapper']//div[@class='circle-text']"
+        eva_v_pattern = "//div[@class='total-bd clearfix']//div[@class='circle-value']"
+        eva_t_pattern = "//div[@class='total-bd clearfix']//div[@class='circle-text']"
         eva_v_list = html.xpath(eva_v_pattern)
         eva_t_list = html.xpath(eva_t_pattern)
         eva_value_list = ['None', 'None', 'None', 'None', 'None']
@@ -175,7 +176,7 @@ class mobile_param_evaluate:
 
     def get_score(self, html):
         # 获取得分
-        eva_s_pattern = "//div[@class='wrapper']//div[@class='total-score']/strong"
+        eva_s_pattern = "//div[@class='total-bd clearfix']//div[@class='total-score']/strong"
         eva_score = html.xpath(eva_s_pattern)
         if eva_score:
             self.temp_evaluate_dic['score'] = eva_score[0].text
@@ -235,10 +236,10 @@ class mobile_param_evaluate:
         stop = 1
         for brand in self.brand_list:
 
-            # if brand.strip() != 'VERTU' and stop == 1:   #控制从哪个开始爬取,从VERTU这个手机厂家开始爬去
-            #     continue
-            # else:
-            #     stop = 0
+            if brand.strip() != 'vivo' and stop == 1:   #控制从哪个开始爬取,从VERTU这个手机厂家开始爬去
+                continue
+            else:
+                stop = 0
 
             global count
             count = 0
@@ -301,6 +302,6 @@ class mobile_param_evaluate:
             param_df = pd.DataFrame(self.params_dic)  # 装成pandas数据模式
             evaluate_df = pd.DataFrame(self.evaluate_dic)
 
-            param_df.to_csv(param_data_to_path, index=None)  # 存储成csv文件
-            evaluate_df.to_csv(evaluate_data_to_path, index=None)
+            param_df.to_csv(param_data_to_path, index=False)  # 存储成csv文件
+            evaluate_df.to_csv(evaluate_data_to_path, index=False)
             self.clear_dic()  # 清掉词典

@@ -125,7 +125,7 @@ class zgc_mobile:
                 'company': self.mobile_com
             })
 
-            df.to_csv(mobile_data_path + '/' + self.brand[i].strip() + '.csv', index=None)
+            df.to_csv(mobile_data_path + '/' + self.brand[i].strip() + '.csv', index=False)
             if self.verbose == 1:
                 print('-' * 80, 'finish ', self.brand[i])
 

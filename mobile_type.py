@@ -84,6 +84,7 @@ class m_type:
         self.get_price(html)
 
         url_list = np.array(self.brand_url)
+        url_list = np.char.add(["http:"], url_list)
         brand_list = np.array(self.brand_name)
         score_list = np.array(self.score_list)
         occupancy_list = np.array(self.occupancy_list)
@@ -100,5 +101,5 @@ class m_type:
             '最高价': high_price,
             'url': url_list
         })
-        data.to_csv(data_path, index=None)
+        data.to_csv(data_path, index=False)
         print('-' * 50, 'finished climb type!')
