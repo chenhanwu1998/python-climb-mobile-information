@@ -100,7 +100,7 @@ class mobile_param_evaluate:
         if len(param) != 0:  # 样式还是老版的情况下的爬虫
             params = ''
             for pa in param:
-                params += pa.xpath('string(').replace('\t', '').replace('\r', '')
+                params += pa.xpath('string(.)').replace('\t', '').replace('\r', '')
             p_list = params.split('\n')
             real_p = [r for r in p_list if len(r) != 0]
 
